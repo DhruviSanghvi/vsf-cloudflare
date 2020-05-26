@@ -1,5 +1,10 @@
 ## Vue Storefront - Cloudflare Autopurge
-You might use CDN not only to serve dist & assets directory but also SSR Output. In this case, you would want to dynamicly purge cache in Cloudflare when it is being purged in Varnish. For that, you need to add `cloudflare` section in the PWA configuration:
+You might use CDN not only to serve dist & assets directory but also SSR Output. In this case, you would want to dynamicly purge cache in Cloudflare when it is being purged in Varnish. For that, you need to clone this repo:
+```
+git submodule add https://github.com/new-fantastic/vsf-cloudflare src/modules/vsf-cloudflare
+```
+
+Then add `cloudflare` section in the PWA configuration:
 ```
 "cloudflare": {
   "purge": true,
