@@ -32,4 +32,23 @@ You should also add `config.server.baseUrl` field in your config. Url **must** e
   },
   ```
 
+Now you need to apply purge-config loader to your app. Your config will be exposed in page's source or produced by Webpack - app.js. We cannot allow that because someone might use this data to purging your cache all the time! To prevent this merge this PR to your project: https://github.com/DivanteLtd/vue-storefront/pull/4540
+
+It is important to put in your config:
+```
+"purgeConfig": [
+    "server.invalidateCacheKey",
+    "server.invalidateCacheForwardUrl",
+    "server.trace",
+    "redis",
+    "install",
+    "expireHeaders",
+    "fastly",
+    "nginx",
+    "varnish",
+    "cloudflare"
+  ]
+```
+This array tells app which parts of config should be available only server side! Presented values will be very good base in most cases (in comparison to original config diff from a PR - I've added `cloudflare` value to the array).
+
 That's all. Since now just after cache purge - it will send purge cache request to Cloudflare (This endpoint: https://api.cloudflare.com/#zone-purge-files-by-url). It respects limit of max 30 urls and divides them into chunks.
